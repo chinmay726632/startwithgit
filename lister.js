@@ -16,4 +16,12 @@ var add = document.querySelectorAll('.title');
  {
     li[i].style.backgroundColor='#f4f4f4';
  }
+  var item2 = document.querySelectorAll('.list-group-item');
+  item2[1].style.backgroundColor='green';
+  item2[1].style.color='blue';
+  item2[2].style.opacity='0.0';
+  var odd = document.querySelectorAll('li:nth-child(odd)')
+  for(var n=0;n<odd.length;n++){
+    odd[n].style.backgroundColor='red';
+  }
  
