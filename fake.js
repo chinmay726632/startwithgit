@@ -36,7 +36,14 @@ function addItem(e){
 
   // Append button to li
   li.appendChild(deleteBtn);
+  for(i=0; i<items.length;i++)
+  {   
+      var newele=document.createElement('button');
+      newele.className=' btn btn-primary btn-sm float-right';
+      newele.appendChild(document.createTextNode('Edit'));
+      itemlist.children[i].appendChild(newele);
 
+  }
   // Append li to list
   itemList.appendChild(li);
 }
