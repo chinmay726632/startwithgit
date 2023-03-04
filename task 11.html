@@ -41,11 +41,21 @@
                     localStorage.removeItem(obj.email)
                     parentEle.removeChild(childEle)
                 }
+                const editButton = document.createElement('input')
+                editButton.type='button';
+                editButton.value ='edit';
+                editButton.onClick=()=>{
+                    localStorage.removeItem(obj.email)
+                    parentEle.removeChild(childEle)
+                    document.getElementById('username').value =obj.name;
+                    document.getElementById('emailId').value = obj.email;
+                    document.getElementById('phonenumber').value =obj.phonenumber;
+                }
                  childEle.appendChild(deleteButton)
+                 childEle.appendChild(editButton)
                  parentEle.appendChild(childEle)
-                 name.value=''
-                  email.value='';
-                  
+                 
+
         }
        
 
