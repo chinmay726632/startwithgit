@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="border:1px solid red; width:200px ; height: 200px; ">
+        <input type="text" id="name" placeholder="name">
+        <input type="text" id="age" placeholder="age">
+    </div>
+    <div id="main">
+
+        <ul>
+            <li>
+                <p>Chinmaya</p>
+                <p> 24</p>
+            </li>
+        </ul>
+    </div>
+    <button id="btn"> Add new</button>
+</body>
+<script>
+var addForm =document.getElementById('btn')
+addForm.addEventListener('click',addNew);
+function addNew(){
+var a=document.getElementById("name").value
+var b=document.getElementById("age").value
+document.getElementById("name").value=""
+document.getElementById("age").value=""
+ //-----------------------
+var node_1 = document.createElement('UL');
+
+var node_2 = document.createElement('LI');
+node_1.appendChild(node_2);
+
+var node_3 = document.createElement('P');
+node_2.appendChild(node_3);
+
+var node_4 = document.createTextNode((new String(a)));
+node_3.appendChild(node_4);
+
+var node_5 = document.createElement('P');
+node_2.appendChild(node_5);
+
+var node_6 = document.createTextNode((new String(b)));
+node_5.appendChild(node_6);
+//--------------------------------   
+var home = document.getElementById("main");
+home.appendChild(node_1)
+}
+</script>
+</html>

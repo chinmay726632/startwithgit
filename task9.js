@@ -69,9 +69,9 @@ function remove(e)
         itemlist.children[i].appendChild(newele);
 
     }
-    function filterItems(e){
+    function filterItems(a){
         // convert text to lowercase
-        var text = e.target.value.toLowerCase();
+        var text = a.target.value.toLowerCase();
         // Get lis
         var items = itemList.getElementsByTagName('li');
         // Convert to an array
