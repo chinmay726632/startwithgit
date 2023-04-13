@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>
+<body>
+   <header id="main-header" class="Expense-tracker">
+    <div class="container">
+        <h1 id="header-title">Expense Tracker</h1>
+    </div>
+   </header> 
+   <div class="container">
+    <form action="" id="my-form" onsubmit="saveToLocalStorage(event)">
+    <div>
+        <label for="Expense">Choose ExpenseAmount</label>
+        <input type="text" id="Expense" name="amount" required>
+    </div>
+    <div>
+        <label for="desciption">Choose Description </label>
+        <input type="text" id="description" name="descriptionOfExpense" required>
+    </div>
+    <div>
+        <label for="category">Choose A Category</label>
+        <select name="categoryofExpense" id="category">
+            <option value="Movie">Movie</option>
+            <option value="Popcorn">Popcorn</option>
+            <option value="Food">Food</option>
+            <option value="Fuel">Fuel</option>
+          </select>
+    </div>
+    <input class="btn" type="submit" value="Add Expense">
+     <ul id="listOfItems"></ul>
+    </form>
+</div>
+   <script>
+    var arrr=JSON.parse(localStorage.getItem("ExpenseTracker"));
+    if (arrr==null) {
+        arrr=[]
+        localStorage.setItem('ExpenseTracker', JSON.stringify(arrr));
+    }
+    window.onload = showUserOnScreen(arrr)
+    function edititem(n){
+        var ExpenseAmount=document.getElementById("Expense").value;
+        var Description=document.getElementById("description").value;
+        var Category=document.getElementById("category").value;
+        const arrr=JSON.parse(localStorage.getItem("ExpenseTracker"));
+        var obj={ExpenseAmount,Description,Category};
+        arrr[n]=obj;
+        localStorage.setItem('ExpenseTracker', JSON.stringify(arrr));
+        showUserOnScreen(arrr)
+
+    }
+    function deleteitem(n){
+        const arrr=JSON.parse(localStorage.getItem("ExpenseTracker"));
+        arrr.splice(n, 1);
+        localStorage.setItem('ExpenseTracker', JSON.stringify(arrr));
+        showUserOnScreen(arrr)
+    }
+    function saveToLocalStorage(event){
+            event.preventDefault();
+            const ExpenseAmount=event.target.amount.value;
+            const Description=event.target.descriptionOfExpense.value;
+            const Category=event.target.categoryofExpense.value;
+            
+            const arrr=JSON.parse(localStorage.getItem("ExpenseTracker"));
+            const obj={
+               ExpenseAmount,
+               Description,
+               Category
+            }
+
+            arrr.push(obj)
+            localStorage.setItem('ExpenseTracker', JSON.stringify(arrr));
+            showUserOnScreen(arrr)
+          
+        }
+        function showUserOnScreen(arrr){
+            const parentEle=document.getElementById('listOfItems')
+            parentEle.innerHTML=""
+            for (const i in arrr) {
+                const childEle=document.createElement('li')
+                 childEle.textContent=arrr[i].ExpenseAmount+'-'+arrr[i].Description+'-'+arrr[i].Category
+                parentEle.appendChild(childEle)
+                const deleteButton=document.createElement('input') 
+         deleteButton.type="button"
+         deleteButton.value="delete Expense"
+
+         deleteButton.setAttribute("onclick", `deleteitem(${i})`);
+        //  deleteButton.onclick=(i)=>{
+        //     console.log("HI"+i);
+            
+        //  }
+         childEle.appendChild(deleteButton)
+         parentEle.appendChild(childEle)
+         
+         const editButton=document.createElement('input') 
+         editButton.type="button"
+         editButton.value="edit Expense"
+         editButton.setAttribute("onclick", `edititem(${i})`);
+        // editButton.onclick=()=>{
+          
+        //    console.log("hello");
+        //     document.getElementById('ExpenseAmountInputTag').value=obj.ExpenseAmount
+        //     document.getElementById('DescriptionInputTag').value=obj.Description
+        //     document.getElementById('CategoryInputTag').value=obj.Category
+        //  }
+         childEle.appendChild(deleteButton)
+         childEle.appendChild(editButton)
+         parentEle.appendChild(childEle)
+            }
+        
+
+         
+         
+        }
+   </script>
+</body>
+</html>
