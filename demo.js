@@ -1,58 +1,88 @@
-const arr1 = [1, 2, 3]
+ console.log('person1 shows ticket');
+console.log('person2 shows ticket');
 
-const arr2 = [3,5,6]
+const preMovie = async () => {
 
-const arr3 = [...arr1, ...arr2]
+  const person3PromiseToShowTicketWhenWifeArrives = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('ticket'), 3000);
+  });
+  const getPopcorn =  new Promise((resolve, reject) => {
+		setTimeout(() => resolve('popcorn'), 3000);
+  });
 
-console.log(arr3)
-//
-function saveToLocalStorage(event){
-    event.preventDefault();
-    const ExpenseAmount=event.target.amount.value;
-    const Description=event.target.descriptionOfExpense.value;
-    const Category=event.target.categoryofExpense.value;
-    
-    
-    const obj={
-       ExpenseAmount,
-       Description,
-       Category
-    }
-    localStorage.setItem('ExpenseTracker', JSON.stringify(obj));
-    showUserOnScreen(obj)
-  
-}
-function showUserOnScreen(obj){
-    const parentEle=document.getElementById('listOfItems')
-    const childEle=document.createElement('li')
-    childEle.textContent=obj.ExpenseAmount+'-'+obj.Description+'-'+obj.Category
-    parentEle.appendChild(childEle)
+  const getButter =  new Promise((resolve, reject) => {
+		setTimeout(() => resolve('butter'), 3000);
+  });
+
+   const getColdDrink =  new Promise((resolve, reject) => {
+		setTimeout(() => resolve('coldrink'), 3000);
+  });
+
+  let ticket = await person3PromiseToShowTicketWhenWifeArrives;
+
+    let [ popcorn, butter, coldrink ] =
+    await Promise.all([ getPopcorn, getButter, getColdDrink  ]);
+
+    console.log(`got ${popcorn}, ${butter}, ${coldrink}`);
 
 
- const deleteButton=document.createElement('input') 
- deleteButton.type="button"
- deleteButton.value="delete Expense"
- deleteButton.onclick=()=>{
-   
-    document.getElementById('ExpenseAmountInputTag').value=obj.ExpenseAmount
-    document.getElementById('DescriptionInputTag').value=obj.Description
-    document.getElementById('CategoryInputTag').value=obj.Category
- }
- childEle.appendChild(deleteButton)
- parentEle.appendChild(childEle)
- 
- const editButton=document.createElement('input') 
- editButton.type="button"
- editButton.value="edit Expense"
-editButton.onclick=()=>{
-  
-   
-    document.getElementById('ExpenseAmountInputTag').value=obj.ExpenseAmount
-    document.getElementById('DescriptionInputTag').value=obj.Description
-    document.getElementById('CategoryInputTag').value=obj.Category
- }
- childEle.appendChild(deleteButton)
- childEle.appendChild(editButton)
- parentEle.appendChild(childEle)
- 
-}
+  return ticket;
+
+};
+
+preMovie().then((t) => console.log(`person4 shows ${t}`));
+
+console.log('person4 shows ticket');
+const posts = [];
+let lastActivityTime = null;
+
+async function createPost(post) {
+  return new Promise((resolve, reject) => {
+  setTimeout(() => {
+  posts.push(post);
+  resolve();
+  }, 2000);
+  });
+  }
+
+  async function updateLastUserActivityTime() {
+  return new Promise((resolve, reject) => {
+  setTimeout(() => {
+  lastActivityTime = new Date();
+  resolve();
+  }, 1000);
+  });
+  }
+
+  async function deleteLastPost() {
+  return new Promise((resolve, reject) => {
+  setTimeout(() => {
+  if (posts.length > 0) {
+  const deletedPost = posts.pop();
+  resolve(deletedPost);
+  } else {
+  reject("ERROR: NO POSTS FOUND");
+  }
+  }, 1500);
+  });
+  }
+
+  function getAllPostsAndActivityTime() {
+  console.log("All posts: ", posts);
+  console.log("Last activity time: ", lastActivityTime);
+  }
+
+  async function main() {
+  try {
+  await createPost({ title: "First Post", body: "This is my first post." });
+  await updateLastUserActivityTime();
+  getAllPostsAndActivityTime();
+  const deletedPost = await deleteLastPost();
+  console.log("Post deleted: ", deletedPost);
+  getAllPostsAndActivityTime();
+  } catch (error) {
+  console.log(error);
+  }
+  }
+
+  main();
