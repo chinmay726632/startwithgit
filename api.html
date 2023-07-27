@@ -19,7 +19,7 @@
             amount,
             name
         }
-        axios.post("https://crudcrud.com/api/c61299ec93174ab78511579b75bda0f0/addUser" ,obj)
+        axios.post("https://crudcrud.com/api/bf5ef640d98b4a5f915233ed4e5562ae/addUser" ,obj)
          .then((response) => {
         showNewUserOnScreen(response.data);
         console.log(response);
@@ -32,7 +32,7 @@
   }
     window.addEventListener("DOMContentLoaded", () => {
     axios
-      .get("https://crudcrud.com/api/c61299ec93174ab78511579b75bda0f0/addUser")
+      .get("https://crudcrud.com/api/bf5ef640d98b4a5f915233ed4e5562ae/adduser")
       .then((response) => {
         for (var i = 0; i < response.data.length; i++) {
           showNewUserOnScreen(response.data[i]);

@@ -6,14 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Admin Page</title>
-
 </head>
 
 <body>
-
-
     <form>
-
         <label for="price">Price:</label>
         <input type="number" id="price">
         <label for="product">Product Name:</label>
@@ -23,7 +19,6 @@
             <option value="electronic">Electronic</option>
             <option value="food">Food</option>
             <option value="skincare">Skincare</option>
-
         </select>
         <input class="btn" type="submit" value="Add Order">
     </form>
@@ -36,11 +31,11 @@
         <p3>Skincare Items</p3><br>
         <ul id="skincareList"></ul>
     </header>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js">
+    </script>
     <script>
 
-        const API_URL = "https://crudcrud.com/api/c9e84baefdce44c3aa3e42304c497c9e/productsAvail";
+        const API_URL = "https://crudcrud.com/api/bf5ef640d98b4a5f915233ed4e5562ae/store";
 
         const form = document.querySelector("form");
         const electronicList = document.querySelector("#electronicList");
@@ -65,6 +60,7 @@
 
         async function postData(url, data) {
             const response = await axios.post(url, data);
+            console.log(response);
             return response.data;
         }
 
@@ -80,6 +76,7 @@
 
         async function addUser(user) {
             await postData(API_URL, user);
+
         }
 
         async function deleteUser(id) {
