@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <h4>seller admin page</h4>
+    </title>
+</head>
+
+<body>
+    <form id="addproduct">
+
+        <label for="product">product name:</label>
+        <input type="text" id="product">
+        <label for="category"> choose a category:</label>
+        <select id="category">
+            <option value="electronics">electronics</option>
+            <option value="food">food</option>
+            <option value="skincare">skincare</option>
+        </select>
+        <label for="price">price:</label>
+        <input type="number" id="price">
+        <input type="submit" class="btn-success" value="addproduct">
+    </form>
+    <h1>products:</h1>
+    <ul id="electronics-item" class="list-group">
+        <h4>electronics:</h4>
+    </ul>
+    <ul id="food-item" class="list-group">
+        <h4>food:</h4>
+    </ul>
+    <ul id="skincare-item" class="list-group">
+        <h4>skincare:</h4>
+    </ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js">
+
+    </script>
+    <script>
+        const frm = document.getElementById('addproduct');
+        frm.addEventListener('submit', addproduct);
+        async function addproduct(event) {
+            event.preventDefault();
+            const product = event.target.product.value;
+            const price = event.target.price.value;
+            const category = event.target.category.value;
+            const obj = { product, price, category };
+            try {
+                const postProduct = await axios.post("https://crudcrud.com/api/6621388a0a634ffa9874f00763153da3/addproduct",obj);
+                showUseronScreen(postProduct.data);
+                console.log(postProduct);
+            }
+            catch (error) {
+                console.log(error);
+            }
+            frm.reset();
+        }
+            document.addEventListener("DOMContentLoaded", async () => {
+                try {
+                    const getProduct = await axios.get("https://crudcrud.com/api/6621388a0a634ffa9874f00763153da3/addproduct");
+                    for (var i = 0; i < getProduct.data.length; i++) {
+                        showUseronScreen(getProduct.data[i]);
+                    }
+                    console.log(getProduct);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            })
+        
+        function showUseronScreen(obj) {
+            var deleteBtn = document.createElement('button');
+            deleteBtn.appendChild(document.createTextNode('deleteorder'));
+            if (obj.category === "electronics") {
+                var parentElem = document.getElementById('electronics-item');
+                var childElem = document.createElement('li');
+                childElem.id = `${obj.id}`;
+                childElem.textContent = obj.product + '-' + obj.category + '-' + obj.price
+                childElem.appendChild(deleteBtn);
+                parentElem.appendChild(childElem);
+            }
+            else if (obj.category === "food") {
+                var parentElem2 = document.getElementById('food-item');
+                var childElem2 = document.createElement('li');
+                childElem2.textContent = obj.product + '-' + obj.category + '-' + obj.price
+                childElem2.appendChild(deleteBtn);
+                parentElem2.appendChild(childElem2);
+            }
+            else (obj.category === "skincare")
+            {
+                var parentElem3 = document.getElementById('skincare-item');
+                var childElem3 = document.createElement('li');
+                childElem3.textContent = obj.product + '-' + obj.category + '-' + obj.price
+                childElem3.appendChild(deleteBtn);
+                parentElem3.appendChild(childElem3);
+            }
+            deleteBtn.onclick = async () => {
+                if (obj.Catagory == "electronics") {
+                    parentElem.removeChild(childElem);
+                } else if (obj.Catagory == "food") {
+                    parentElem2.removeChild(childElem2);
+                } else if (obj.Catagory == "skincare") {
+                    parentElem3.removeChild(childElem3);
+                }
+
+                try {
+                    const deleteProduct = await axios.delete(`https://crudcrud.com/api/6621388a0a634ffa9874f00763153da3/addproduct/${obj.id}`);
+                    console.log(obj);
+
+                } catch (err) {
+                    console.log(err);
+
+                }
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
